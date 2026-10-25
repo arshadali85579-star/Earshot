@@ -1,0 +1,1180 @@
+/* ==========================================================================
+   EARSHOT — Cinematic Running Fox Stylesheet
+   Reference-accurate styling, geometric typography, and glassmorphism UI
+   ========================================================================== */
+
+:root {
+  --font-main: 'Montserrat', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-white: #ffffff;
+  --color-dark: #121417;
+  --glass-bg: rgba(255, 255, 255, 0.16);
+  --glass-border: rgba(255, 255, 255, 0.24);
+  --glass-blur: blur(14px);
+  --shadow-cinematic: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --accent-mirage: #ff8a65;
+  --accent-pack: #ffb74d;
+  --accent-tide: #4dd0e1;
+  --accent-aurora: #b388ff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #0d0f14;
+  color: #ffffff;
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  user-select: none;
+}
+
+/* Screen reader accessibility utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip link for keyboard accessibility */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: #ffffff;
+  color: #121417;
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  z-index: 1000;
+  text-decoration: none;
+  transition: top 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.skip-to-content:focus {
+  top: 16px;
+  outline: 3px solid #ffb74d;
+}
+
+/* High-contrast focus-visible styles across interactive controls */
+:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.brand-logo-hotspot:focus-visible,
+.nav-link-hotspot:focus-visible,
+.hero-cta-hotspot:focus-visible,
+.play-hotspot-btn:focus-visible,
+.menu-hotspot-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  border-radius: 9999px;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.85);
+}
+
+.world-thumb-btn:focus-visible,
+.couriers-meter-container:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.9);
+}
+
+/* Base App Root */
+.earshot-app-root {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   Fullscreen Fixed Viewport (Holds Cinematic Scene & Floating UI)
+   ========================================================================== */
+.fullscreen-viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* Tall Native Scroll Track */
+.scroll-track-container {
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* ==========================================================================
+   Cinematic World Viewport & Video Layer
+   ========================================================================== */
+.cinematic-world-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+.hero-video-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.ambient-particles-canvas {
+  display: none !important;
+}
+
+.world-atmosphere-glow {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Floating Top Navigation Bar (Matches Reference Pixel-Perfect)
+   ========================================================================== */
+.navbar-container {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  width: 100%;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 40;
+  pointer-events: auto;
+}
+
+/* Brand Logo Hotspot over video's EARSHOT logo */
+.brand-logo-hotspot {
+  width: 140px;
+  height: 38px;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.brand-logo-hotspot:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Center Capsule Pill Hotspot */
+.nav-capsule-hotspot {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 32px;
+  background: transparent;
+  padding: 0;
+}
+
+.nav-link-hotspot {
+  position: relative;
+  width: 58px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 9999px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-hover-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-link-hotspot:hover .link-hover-pill {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Right Nav Controls */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-icon-pill {
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #ffffff;
+  cursor: pointer;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: all 0.2s ease;
+}
+
+.nav-icon-pill:hover {
+  background: rgba(255, 255, 255, 0.26);
+  transform: translateY(-1px);
+}
+
+.nav-icon-pill.active-audio,
+.nav-icon-pill.active-autorun {
+  background: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.pulse-icon {
+  animation: pulseBeat 1.8s infinite;
+}
+
+@keyframes pulseBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.nav-quality-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-family: var(--font-main);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.nav-quality-pill:hover {
+  background: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(255, 215, 0, 0.25);
+}
+
+.quality-icon {
+  color: #ffd54f;
+  animation: sparkleTwinkle 2.4s infinite ease-in-out;
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% { transform: scale(0.9); opacity: 0.85; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+.quality-text {
+  text-transform: uppercase;
+}
+
+/* Play Hotspot over video's Play pill */
+.play-hotspot-btn {
+  position: relative;
+  width: 58px;
+  height: 34px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 9999px;
+  margin-left: 6px;
+}
+
+.hotspot-glow-ring {
+  position: absolute;
+  inset: -1px;
+  border-radius: 9999px;
+  border: 1.5px solid transparent;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.hotspot-glow-ring.circle {
+  border-radius: 50%;
+}
+
+.play-hotspot-btn:hover .hotspot-glow-ring,
+.menu-hotspot-btn:hover .hotspot-glow-ring {
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Menu Hotspot over video's Hamburger icon */
+.menu-hotspot-btn {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-left: 2px;
+}
+
+/* ==========================================================================
+   Hero CTA Anchors (Overlaid Exactly Over Video Buttons)
+   ========================================================================== */
+.hero-overlay-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.world-cta-anchor {
+  position: absolute;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.world-cta-anchor.active-cta {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.world-cta-anchor.inactive-cta {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+}
+
+/* Responsive CTA Hotspot Anchors (Overlays video's button seamlessly) */
+.world-cta-anchor.world-1,
+.world-cta-anchor.world-3 {
+  left: 6%;
+  top: 60%;
+}
+
+.world-cta-anchor.world-2,
+.world-cta-anchor.world-4 {
+  left: 54%;
+  top: 60%;
+}
+
+/* Invisible Interactive Hotspot Pill Button */
+.hero-cta-hotspot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 50px;
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.cta-hotspot-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+.hero-cta-hotspot:hover .cta-hotspot-glow {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   Bottom Floating Thumbnails Navigation
+   ========================================================================== */
+.bottom-thumbnails-container {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 35;
+  pointer-events: auto;
+}
+
+.thumbnail-tooltip {
+  background: rgba(18, 20, 24, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  text-align: center;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.tooltip-title {
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tooltip-meta {
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  font-size: 0.66rem;
+  margin-top: 2px;
+}
+
+.tooltip-sep {
+  opacity: 0.4;
+}
+
+.thumbnails-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.world-thumb-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.world-thumb-btn:hover {
+  transform: scale(1.1);
+}
+
+.thumb-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+
+.world-thumb-btn:hover .thumb-ring {
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.world-thumb-btn.active .thumb-ring {
+  border-color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.95), inset 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+   Bottom Right Couriers Meter (Hotspot over video dial)
+   ========================================================================== */
+.couriers-meter-container {
+  position: absolute;
+  bottom: 14px;
+  right: 18px;
+  z-index: 35;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.meter-dial-wrapper.hotspot-dial {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.meter-hotspot-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+.couriers-meter-container:hover .meter-hotspot-glow {
+  border-color: rgba(255, 204, 128, 0.7);
+  box-shadow: 0 0 20px rgba(255, 204, 128, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Couriers Popover */
+.couriers-popover {
+  position: absolute;
+  bottom: 96px;
+  right: 0;
+  width: 220px;
+  background: rgba(18, 20, 24, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.popover-heading {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 10px;
+}
+
+.popover-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 6px;
+}
+
+.popover-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin-top: 8px;
+  padding-top: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00e676;
+  box-shadow: 0 0 8px #00e676;
+  margin-right: auto;
+  margin-left: 6px;
+}
+
+/* ==========================================================================
+   Interactive Modals & Feature Drawers
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.25s ease;
+  padding: 20px;
+}
+
+.modal-window {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(20, 24, 32, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  animation: modalScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #ffffff;
+}
+
+@keyframes modalScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #ffa726;
+}
+
+.modal-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffa726;
+  box-shadow: 0 0 8px #ffa726;
+}
+
+.modal-close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.modal-title {
+  font-family: var(--font-main);
+  font-size: 1.45rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.modal-subtitle {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 22px;
+}
+
+.world-telemetry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.telemetry-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.telemetry-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.telemetry-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.modal-action-btn {
+  width: 100%;
+  background: #ffffff;
+  color: #121417;
+  border: none;
+  font-family: var(--font-main);
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 13px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+.modal-action-btn:hover {
+  background: #f0f0f0;
+  transform: translateY(-1px);
+}
+
+.modal-action-btn.primary {
+  background: linear-gradient(135deg, #ffa726, #fb8c00);
+  color: #ffffff;
+}
+
+.sprint-active-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0, 230, 118, 0.12);
+  border: 1px solid rgba(0, 230, 118, 0.3);
+  padding: 14px;
+  border-radius: 12px;
+  color: #00e676;
+  font-size: 0.82rem;
+}
+
+.sprint-active-banner p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 2px;
+}
+
+/* Kit Tabs */
+.kit-item-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.kit-tab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kit-tab.active {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #ffa726;
+}
+
+.tab-name {
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.tab-perk {
+  font-size: 0.72rem;
+  color: #ffa726;
+}
+
+.kit-preview-box {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 22px;
+}
+
+.kit-stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.kit-stat-row:last-child {
+  margin-bottom: 0;
+}
+
+.kit-equipped-badge {
+  color: #00e676;
+  font-weight: 700;
+}
+
+/* Route Stages */
+.route-stages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.route-stage {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+.route-stage.active {
+  border-color: #4dd0e1;
+  background: rgba(77, 208, 225, 0.08);
+}
+
+.stage-num {
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #4dd0e1;
+}
+
+.stage-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.stage-info strong {
+  font-size: 0.84rem;
+}
+
+.stage-info span {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.stage-status {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Standings */
+.league-standings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.standing-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 70px 65px;
+  align-items: center;
+  font-size: 0.78rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.standing-row.header {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+}
+
+.standing-row.gold {
+  border-left: 3px solid #ffd700;
+}
+
+.status-tag.live {
+  color: #00e676;
+  font-weight: 700;
+}
+
+/* Game Controls Helper */
+.game-controls-helper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.82rem;
+}
+
+.control-item kbd {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  min-width: 90px;
+  text-align: center;
+}
+
+/* Drawer Worlds Grid */
+.drawer-worlds-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.drawer-world-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  border-radius: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.drawer-world-card:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.drawer-world-card.active {
+  border-color: #ffa726;
+  background: rgba(255, 167, 38, 0.1);
+}
+
+.drawer-world-card img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.drawer-world-card .card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-world-card strong {
+  font-size: 0.88rem;
+}
+
+.drawer-world-card span {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.keyboard-shortcuts-drawer {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.shortcuts-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+/* ==========================================================================
+   Animations & Responsive Breakpoints
+   ========================================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Tablet & Mobile Breakpoints */
+@media (max-width: 900px) {
+  .navbar-container {
+    padding: 0 18px;
+    top: 14px;
+  }
+
+  .nav-capsule {
+    display: none;
+  }
+
+  .world-cta-anchor.world-1,
+  .world-cta-anchor.world-3 {
+    left: 24px;
+    top: auto;
+    bottom: 80px;
+  }
+
+  .world-cta-anchor.world-2,
+  .world-cta-anchor.world-4 {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 60%;
+  }
+
+  .couriers-meter-container {
+    right: 14px;
+    bottom: 14px;
+    transform: scale(0.85);
+    transform-origin: bottom right;
+  }
+
+  .bottom-thumbnails-container {
+    bottom: 14px;
+  }
+
+  .thumbnails-row {
+    padding: 4px 8px;
+    gap: 8px;
+  }
+
+  .world-thumb-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .thumb-avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .thumb-ring {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-container {
+    padding: 0 14px;
+    top: 12px;
+  }
+
+  .brand-wordmark {
+    font-size: 1rem;
+  }
+
+  .couriers-meter-container {
+    display: none;
+  }
+}
+
+/* 320px viewport reflow check (WCAG 1.4.10 Reflow) */
+@media (max-width: 360px) {
+  .navbar-container {
+    padding: 0 8px;
+  }
+
+  .nav-quality-pill {
+    padding: 4px 8px;
+    font-size: 0.65rem;
+  }
+
+  .thumbnails-row {
+    gap: 6px;
+  }
+}
+
+/* Prefers-reduced-motion Accessibility Rule (WCAG 2.3.3 Animation from Interactions) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .pulse-icon,
+  .quality-icon,
+  .modal-badge-dot,
+  .live-dot {
+    animation: none !important;
+  }
+
+  .hero-video-media {
+    transition: none !important;
+  }
+}
+
+/* Touch Target Minimum Dimensions (WCAG 2.5.8 Target Size) */
+@media (pointer: coarse) {
+  .nav-icon-pill,
+  .menu-hotspot-btn,
+  .world-thumb-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .nav-link-hotspot {
+    min-height: 44px;
+  }
+}
