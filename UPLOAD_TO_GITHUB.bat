@@ -46,7 +46,14 @@ if exist "public\assets\earshot_4k.mp4" (
 if "!LARGE_4K_EXISTS!"=="0" goto :GIT_SETUP
 if "!HAS_LFS!"=="1" goto :CONFIGURE_LFS
 
-:: Git LFS not found and large file exists
+:: Check if earshot_4k is already excluded in .gitignore
+git check-ignore -q "public\assets\earshot_4k.mp4" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo [OK] 4K video is safely excluded via .gitignore. Standard assets will be pushed.
+    goto :GIT_SETUP
+)
+
+:: Git LFS not found and large file is unignored
 goto :PROMPT_LFS_OPTIONS
 
 :CONFIGURE_LFS
@@ -216,10 +223,10 @@ goto :ERR_PUSH_FAILED
 color 0A
 echo.
 echo ===============================================================================
-echo                         DEPLOYMENT SUCCESSFUL!
+echo                         DEPLOYMENT SUCCESSFUL^^!
 echo ===============================================================================
 echo.
-echo All code, assets, and configurations have been published to GitHub!
+echo All code, assets, and configurations have been published to GitHub^^!
 echo Repository: %TARGET_REPO%
 echo Branch:     !ACTIVE_BRANCH!
 echo.
